@@ -1,4 +1,7 @@
 ﻿using Bookshelf.DbContexts;
+using Bookshelf.Models;
+using Bookshelf.Services;
+using Bookshelf.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,7 +29,10 @@ namespace Bookshelf
 
             }
 
-            Window window = new MainWindow();
+            Window window = new MainWindow()
+            {
+                DataContext = new MainViewModel(BookTableViewModel.LoadBookTableViewModel(new GenericDataService<Book>(new BookshelfDbContextFactory(CONNECTION_STRING))))
+            };
             window.Show();
 
             base.OnStartup(e);
