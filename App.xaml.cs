@@ -26,6 +26,9 @@ namespace Bookshelf
 
             }
 
+            Window window = new MainWindow();
+            window.Show();
+
             base.OnStartup(e);
         }
     }
