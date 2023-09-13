@@ -13,7 +13,15 @@ namespace Bookshelf.ViewModels
         private readonly IDataService<Book> _bookService;
         private IEnumerable<BookViewModel> _books;
 
-        public IEnumerable<BookViewModel> Books => _books;
+        public IEnumerable<BookViewModel> Books
+        {
+            get { return _books; }
+            set
+            {
+                _books = value;
+                OnPropertyChanged(nameof(Books));
+            }
+        }
 
         private BookTableViewModel(IDataService<Book> bookService)
         {

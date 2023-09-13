@@ -11,6 +11,6 @@
     Height="450"
     mc:Ignorable="d">
     <Grid>
-        <views:BookTableView DataContext="{Binding CurrentViewModel}" />
+        <views:ContinentTableView DataContext="{Binding CurrentViewModel}" />
     </Grid>
 </Window>
