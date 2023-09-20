@@ -18,9 +18,9 @@ namespace Bookshelf.Views
     /// <summary>
     /// Logika interakcji dla klasy CountryTableView.xaml
     /// </summary>
-    public partial class CountryTableView : UserControl
+    public partial class CountryListingView : UserControl
     {
-        public CountryTableView()
+        public CountryListingView()
         {
             InitializeComponent();
         }
