@@ -16,5 +16,6 @@ namespace Bookshelf.ViewModels
         {
             _currentViewModel = currentViewModel;
         }
+
     }
 }

@@ -2,6 +2,7 @@
     x:Class="Bookshelf.Windows.AddObjectWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:countryViewModels="clr-namespace:Bookshelf.ViewModels.CountryViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Bookshelf.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -16,6 +17,9 @@
         <Grid.Resources>
             <DataTemplate DataType="{x:Type viewModels:AddContinentViewModel}">
                 <views:AddContinentView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type countryViewModels:AddCountryViewModel}">
+                <views:AddCountryView />
             </DataTemplate>
         </Grid.Resources>
 

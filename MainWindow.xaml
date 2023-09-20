@@ -11,6 +11,7 @@
     Height="450"
     mc:Ignorable="d">
     <Grid>
-        <views:ContinentTableView DataContext="{Binding CurrentViewModel}" />
+        <views:CountryTableView DataContext="{Binding CurrentViewModel}" />
+        <!--<views:ContinentTableView DataContext="{Binding CurrentViewModel}" />-->
     </Grid>
 </Window>

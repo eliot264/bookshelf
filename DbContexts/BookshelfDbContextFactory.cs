@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,11 @@ using System.Threading.Tasks;
 
 namespace Bookshelf.DbContexts
 {
-    public class BookshelfDbContextFactory
+    public class BookshelfDbContextFactory : IDesignTimeDbContextFactory<BookshelfDbContext>
     {
-        private readonly string _connectionString;
-
-        public BookshelfDbContextFactory(string connectionString)
+        public BookshelfDbContext CreateDbContext(string[]? args = null)
         {
-            _connectionString = connectionString;
-        }
-
-        public BookshelfDbContext CreateDbContext()
-        {
-            DbContextOptions options = new DbContextOptionsBuilder().UseSqlite(_connectionString).Options;
+            DbContextOptions options = new DbContextOptionsBuilder().UseSqlite("Data Source=bookshelf.db").Options;
 
             return new BookshelfDbContext(options);
         }

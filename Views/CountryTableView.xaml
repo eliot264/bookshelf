@@ -1,7 +1,8 @@
 ﻿<UserControl
-    x:Class="Bookshelf.Views.ContinentTableView"
+    x:Class="Bookshelf.Views.CountryTableView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Bookshelf.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Bookshelf.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,6 +10,9 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:ObjectListToStringListConverter x:Key="ObjectListToStringListConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -21,24 +25,25 @@
                     Margin="5"
                     Padding="15,5"
                     Command="{Binding OpenAddEntityWindowCommand}"
-                    Content="Add Continent" />
+                    Content="Add Country" />
                 <Button
                     Margin="5"
                     Padding="15,5"
-                    Command="{Binding DeleteEntitiesCommand}"
-                    Content="Delete Continent" />
+                    Command="{Binding DeleteObjectsCommand}"
+                    Content="Delete Countries" />
             </StackPanel>
-
         </Grid>
 
         <Grid Grid.Row="1">
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Entities}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
-                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}" Header="Select" />
+                    <DataGridTextColumn
+                        Binding="{Binding Continents, Converter={StaticResource ObjectListToStringListConverter}}"
+                        CanUserSort="False"
+                        Header="Countries" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
     </Grid>
-
 </UserControl>

@@ -12,13 +12,13 @@ namespace Bookshelf.Services
 {
     public class GenericDataService<T> : IDataService<T> where T : DomainObject
     {
-        private readonly BookshelfDbContextFactory _contextFactory;
+        protected readonly BookshelfDbContextFactory _contextFactory;
 
         public GenericDataService(BookshelfDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
-        public async Task<T> Create(T entity)
+        public virtual async Task<T> Create(T entity)
         {
             using(BookshelfDbContext context = _contextFactory.CreateDbContext())
             {
@@ -51,7 +51,7 @@ namespace Bookshelf.Services
             }
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAll()
         {
             using (BookshelfDbContext context = _contextFactory.CreateDbContext())
             {

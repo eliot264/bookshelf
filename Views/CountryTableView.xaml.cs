@@ -13,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Bookshelf
+namespace Bookshelf.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logika interakcji dla klasy CountryTableView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CountryTableView : UserControl
     {
-        public MainWindow(object dataContext)
+        public CountryTableView()
         {
             InitializeComponent();
-
-            DataContext = dataContext;
         }
     }
 }
