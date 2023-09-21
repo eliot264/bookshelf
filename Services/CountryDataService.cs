@@ -26,6 +26,27 @@ namespace Bookshelf.Services
             }
         }
 
+        public override async Task<Country> Update(int id, Country country)
+        {
+            using(BookshelfDbContext context = _contextFactory.CreateDbContext())
+            {
+                var countryToUpdate = context.Countries.Include(c => c.Continents).First(c => c.Id == id);
+
+                countryToUpdate.Name = country.Name;
+
+                countryToUpdate.Continents.Clear();
+                foreach(var continent in country.Continents)
+                {
+                    countryToUpdate.Continents.Add(context.Continents.Include(c => c.Countries).First(c => c.Id == continent.Id));
+                }
+
+                context.Countries.Update(countryToUpdate);
+                await context.SaveChangesAsync();
+
+                return countryToUpdate;
+            }
+        }
+
         public override async Task<Country> Create(Country country)
         {
             using (BookshelfDbContext context = _contextFactory.CreateDbContext())

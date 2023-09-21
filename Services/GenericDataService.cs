@@ -61,7 +61,7 @@ namespace Bookshelf.Services
             }
         }
 
-        public async Task<T> Update(int id, T entity)
+        public virtual async Task<T> Update(int id, T entity)
         {
             using (BookshelfDbContext context = _contextFactory.CreateDbContext())
             {

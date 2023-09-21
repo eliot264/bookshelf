@@ -59,5 +59,13 @@ namespace Bookshelf.ViewModels
             OnPropertyChanged(nameof(Entities));
             _windowService.CloseWindow();
         }
+
+        public void UpdateEntityOnList(T entity)
+        {
+            //App.Current.Dispatcher.Invoke(() =>
+            //{
+            //    Entities.First(e => e.Id == entity.Id)
+            //});
+        }
     }
 }

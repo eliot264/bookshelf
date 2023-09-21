@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="Bookshelf.Views.AddCountryView"
+    x:Class="Bookshelf.Views.EditCountryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -49,7 +49,7 @@
                 <ComboBox IsReadOnly="True" ItemsSource="{Binding AllContinents}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" />
+                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -64,8 +64,8 @@
             <Border>
                 <Button
                     Padding="15,5"
-                    Command="{Binding AddEntityCommand}"
-                    Content="Add" />
+                    Command="{Binding UpdateEntityCommand}"
+                    Content="Update" />
             </Border>
         </Grid>
     </Grid>

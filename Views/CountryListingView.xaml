@@ -25,23 +25,43 @@
                     Margin="5"
                     Padding="15,5"
                     Command="{Binding OpenAddEntityWindowCommand}"
-                    Content="Add Country" />
+                    Content="Add country" />
                 <Button
                     Margin="5"
                     Padding="15,5"
                     Command="{Binding DeleteObjectsCommand}"
-                    Content="Delete Countries" />
+                    Content="Delete selected countries" />
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1">
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Entities}">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn CanUserSort="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsChecked}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
                     <DataGridTextColumn
                         Binding="{Binding Continents, Converter={StaticResource ObjectListToStringListConverter}}"
                         CanUserSort="False"
                         Header="Countries" />
+                    <DataGridTemplateColumn CanUserSort="False">
+                        <DataGridTemplateColumn.Header>
+                            <Label Content="Actions" />
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Command="{Binding OpenEditEntityWindowCommand}" Content="Edit" />
+                                    <Button Content="Delete" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

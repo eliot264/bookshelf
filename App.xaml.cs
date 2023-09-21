@@ -46,12 +46,15 @@ namespace Bookshelf
             services.AddSingleton<IDataService<Country>, CountryDataService>();
             services.AddSingleton<IDataService<Continent>, GenericDataService<Continent>>();
             services.AddSingleton<IWindowService<AddObjectWindow>, GenericWindowService<AddObjectWindow>>();
+            services.AddSingleton<IWindowService<EditObjectWindow>, GenericWindowService<EditObjectWindow>>();
 
             services.AddSingleton<IBookshelfViewModelFactory<CountryListingViewModel>, CountryListingViewModelFactory>();
 
+            services.AddSingleton<IEntityListingElementViewModelFactory<Country>, CountryListingElementViewModelFactory>();
+
             services.AddSingleton<IAddEntityViewModelFactory<Country>, AddCountryViewModelFactory>();
 
-            services.AddSingleton<IEntityListingElementViewModelFactory<Country>, CountryListingElementViewModelFactory>();
+            services.AddSingleton<IEditEntityViewModelFactory<Country>, EditCountryViewModelFactory>();
 
             services.AddScoped<MainViewModel>(s => new MainViewModel(s.GetRequiredService<IBookshelfViewModelFactory<CountryListingViewModel>>().CreateViewModel()));
 
