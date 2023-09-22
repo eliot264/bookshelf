@@ -17,24 +17,24 @@ namespace Bookshelf.ViewModels
     public class EntityListingViewModel<T> : ViewModelBase where T : DomainObject, new()
     {
         private readonly IDataService<T> _dataService;
-        private readonly IWindowService<AddObjectWindow> _windowService;
-        public readonly IAddEntityViewModelFactory<T> _addEntityViewModelFactory;
+        private readonly IWindowService<EntityDetailsWindow> _windowService;
         public readonly IEntityListingElementViewModelFactory<T> _entityListingElementViewModelFactory;
+        public readonly IEntityDetailsViewModelFactory<T> _entityDetailsViewModelFactory;
         private readonly ObservableCollection<EntityListingElementViewModel<T>> _entities;
 
         public ObservableCollection<EntityListingElementViewModel<T>> Entities => _entities;
 
         public ICommand OpenAddEntityWindowCommand { get; set; }
 
-        protected EntityListingViewModel(IDataService<T> dataService, IWindowService<AddObjectWindow> windowService, IAddEntityViewModelFactory<T> addEntityViewModelFactory, IEntityListingElementViewModelFactory<T> entityListingElementViewModelFactory)
+        protected EntityListingViewModel(IDataService<T> dataService, IWindowService<EntityDetailsWindow> windowService, IEntityListingElementViewModelFactory<T> entityListingElementViewModelFactory, IEntityDetailsViewModelFactory<T> entityDetailsViewModelFactory)
         {
-            _addEntityViewModelFactory = addEntityViewModelFactory;
             _entityListingElementViewModelFactory = entityListingElementViewModelFactory;
+            _entityDetailsViewModelFactory = entityDetailsViewModelFactory;
             _dataService = dataService;
             _windowService = windowService;
             _entities = new ObservableCollection<EntityListingElementViewModel<T>>();
 
-            OpenAddEntityWindowCommand = new OpenAddEntityWindowCommand<T>(this, _dataService, _windowService, _addEntityViewModelFactory);
+            OpenAddEntityWindowCommand = new OpenEntityDetailsWindowCommand<T>(this, _windowService, _entityDetailsViewModelFactory);
         }
         
         protected void LoadEntities()
@@ -58,14 +58,6 @@ namespace Bookshelf.ViewModels
             });
             OnPropertyChanged(nameof(Entities));
             _windowService.CloseWindow();
-        }
-
-        public void UpdateEntityOnList(T entity)
-        {
-            //App.Current.Dispatcher.Invoke(() =>
-            //{
-            //    Entities.First(e => e.Id == entity.Id)
-            //});
         }
     }
 }

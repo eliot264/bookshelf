@@ -17,8 +17,8 @@ namespace Bookshelf.ViewModels
     public class EntityListingElementViewModel<T> : ViewModelBase where T : DomainObject, new()
     {
         private readonly EntityListingViewModel<T> _entityListingViewModel;
-        private readonly IWindowService<EditObjectWindow> _windowService;
-        private readonly IEditEntityViewModelFactory<T> _editEntityViewModelFactory;
+        private readonly IWindowService<EntityDetailsWindow> _windowService;
+        private readonly IEntityDetailsViewModelFactory<T> _entityDetailsViewModelFactory;
         protected T _entity;
         private bool _isChecked;
 
@@ -36,15 +36,15 @@ namespace Bookshelf.ViewModels
 
         protected event EntityChangedEventHandler? EntityChanged;
 
-        public EntityListingElementViewModel(EntityListingViewModel<T> entityListingViewModel, IWindowService<EditObjectWindow> windowService, IEditEntityViewModelFactory<T> editEntityViewModelFactory, T entity)
+        public EntityListingElementViewModel(EntityListingViewModel<T> entityListingViewModel, IWindowService<EntityDetailsWindow> windowService, T entity, IEntityDetailsViewModelFactory<T> entityDetailsViewModelFactory)
         {
             _entityListingViewModel = entityListingViewModel;
             _windowService = windowService;
-            _editEntityViewModelFactory = editEntityViewModelFactory;
+            _entityDetailsViewModelFactory = entityDetailsViewModelFactory;
             _entity = entity;
             _isChecked = false;
 
-            OpenEditEntityWindowCommand = new OpenEditEntityWindowCommand<T>(this, _windowService, _editEntityViewModelFactory, _entity);
+            OpenEditEntityWindowCommand = new OpenEntityDetailsWindowCommand<T>(_entity, this, _windowService, _entityDetailsViewModelFactory);
         }
 
         public void UpdateEntity(T entity)

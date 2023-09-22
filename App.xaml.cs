@@ -4,6 +4,7 @@ using Bookshelf.Services;
 using Bookshelf.ViewModels;
 using Bookshelf.ViewModels.CountryViewModels;
 using Bookshelf.ViewModels.Factories;
+using Bookshelf.ViewModels.Factories.CountryFactories;
 using Bookshelf.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,16 +46,14 @@ namespace Bookshelf
             services.AddSingleton<BookshelfDbContextFactory>();
             services.AddSingleton<IDataService<Country>, CountryDataService>();
             services.AddSingleton<IDataService<Continent>, GenericDataService<Continent>>();
-            services.AddSingleton<IWindowService<AddObjectWindow>, GenericWindowService<AddObjectWindow>>();
-            services.AddSingleton<IWindowService<EditObjectWindow>, GenericWindowService<EditObjectWindow>>();
+            services.AddSingleton<IWindowService<EntityDetailsWindow>, GenericWindowService<EntityDetailsWindow>>();
 
             services.AddSingleton<IBookshelfViewModelFactory<CountryListingViewModel>, CountryListingViewModelFactory>();
 
             services.AddSingleton<IEntityListingElementViewModelFactory<Country>, CountryListingElementViewModelFactory>();
 
-            services.AddSingleton<IAddEntityViewModelFactory<Country>, AddCountryViewModelFactory>();
+            services.AddSingleton<IEntityDetailsViewModelFactory<Country>, CountryDetailsViewModelFactory>();
 
-            services.AddSingleton<IEditEntityViewModelFactory<Country>, EditCountryViewModelFactory>();
 
             services.AddScoped<MainViewModel>(s => new MainViewModel(s.GetRequiredService<IBookshelfViewModelFactory<CountryListingViewModel>>().CreateViewModel()));
 

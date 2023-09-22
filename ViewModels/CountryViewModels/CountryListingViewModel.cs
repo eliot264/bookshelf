@@ -12,13 +12,13 @@ namespace Bookshelf.ViewModels.CountryViewModels
 {
     public class CountryListingViewModel : EntityListingViewModel<Country>
     {
-        private CountryListingViewModel(IDataService<Country> dataService, IWindowService<AddObjectWindow> windowService, IAddEntityViewModelFactory<Country> addEntityViewModelFactory, IEntityListingElementViewModelFactory<Country> entityListingElementViewModelFactory) : base(dataService, windowService, addEntityViewModelFactory, entityListingElementViewModelFactory)
+        private CountryListingViewModel(IDataService<Country> dataService, IWindowService<EntityDetailsWindow> windowService, IEntityListingElementViewModelFactory<Country> entityListingElementViewModelFactory, IEntityDetailsViewModelFactory<Country> entityDetailsViewModelFactory) : base(dataService, windowService, entityListingElementViewModelFactory, entityDetailsViewModelFactory)
         {
         }
 
-        public static CountryListingViewModel GetCountryListingViewModel(IDataService<Country> dataService, IWindowService<AddObjectWindow> windowService, IAddEntityViewModelFactory<Country> addEntityViewModelFactory, IEntityListingElementViewModelFactory<Country> entityListingElementViewModelFactory)
+        public static CountryListingViewModel GetCountryListingViewModel(IDataService<Country> dataService, IWindowService<EntityDetailsWindow> windowService, IEntityListingElementViewModelFactory<Country> entityListingElementViewModelFactory, IEntityDetailsViewModelFactory<Country> entityDetailsViewModelFactory)
         {
-            CountryListingViewModel countryListingViewModel = new CountryListingViewModel(dataService, windowService, addEntityViewModelFactory, entityListingElementViewModelFactory);
+            CountryListingViewModel countryListingViewModel = new CountryListingViewModel(dataService, windowService, entityListingElementViewModelFactory, entityDetailsViewModelFactory);
             countryListingViewModel.LoadEntities();
             return countryListingViewModel;
         }

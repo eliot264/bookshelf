@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 
 namespace Bookshelf.ViewModels.CountryViewModels
 {
-    public class EditCountryViewModel : EditEntityViewModel<Country>
+    public class CountryDetailsViewModel : EntityDetailsViewModel<Country>
     {
         private readonly IDataService<Continent> _continentService;
         private readonly ObservableCollection<ContinentViewModel> _allContinents;
-        //private readonly IList<Continent> _allContinents;
 
         public string Name
         {
@@ -27,12 +26,30 @@ namespace Bookshelf.ViewModels.CountryViewModels
         }
         public ObservableCollection<ContinentViewModel> AllContinents => _allContinents;
 
-        public EditCountryViewModel(EntityListingElementViewModel<Country> entityListingElementViewModel, IDataService<Country> dataService, IDataService<Continent> continentService, Country entity) : base(entityListingElementViewModel, dataService, entity)
+        private CountryDetailsViewModel(IDataService<Country> countryService, IDataService<Continent> continentService, EntityListingViewModel<Country> entityListingViewModel) : base(countryService, entityListingViewModel)
         {
             _continentService = continentService;
             _allContinents = new ObservableCollection<ContinentViewModel>();
+        }
 
-            LoadContinents();
+        private CountryDetailsViewModel(IDataService<Country> countryService, IDataService<Continent> continentService, EntityListingElementViewModel<Country> entityListingElementViewModel, Country entity) : base(countryService, entityListingElementViewModel, entity)
+        {
+            _continentService = continentService;
+            _allContinents = new ObservableCollection<ContinentViewModel>();
+        }
+
+        public static CountryDetailsViewModel GetCountryDetailsViewModel(IDataService<Country> countryService, IDataService<Continent> continentService, EntityListingViewModel<Country> entityListingViewModel)
+        {
+            CountryDetailsViewModel countryDetailsViewModel = new CountryDetailsViewModel(countryService, continentService, entityListingViewModel);
+            countryDetailsViewModel.LoadContinents();
+            return countryDetailsViewModel;
+        }
+
+        public static CountryDetailsViewModel GetCountryDetailsViewModel(IDataService<Country> countryService, IDataService<Continent> continentService, EntityListingElementViewModel<Country> entityListingElementViewModel, Country entity)
+        {
+            CountryDetailsViewModel countryDetailsViewModel = new CountryDetailsViewModel(countryService, continentService, entityListingElementViewModel, entity);
+            countryDetailsViewModel.LoadContinents();
+            return countryDetailsViewModel;
         }
 
         private void LoadContinents()
@@ -45,7 +62,7 @@ namespace Bookshelf.ViewModels.CountryViewModels
                     {
                         ContinentViewModel continentViewModel = new ContinentViewModel(continent)
                         {
-                            IsChecked = _entity.Continents.Where(e => e.Id == continent.Id).Any(),
+                            IsChecked = Mode == EntityDetailsMode.Update && _entity.Continents.Where(e => e.Id == continent.Id).Any()
                         };
 
                         continentViewModel.IsCheckedChanged += ContinentViewModelIsCheckedChanged;
@@ -58,7 +75,7 @@ namespace Bookshelf.ViewModels.CountryViewModels
         private void ContinentViewModelIsCheckedChanged(object sender, IsCheckedChangedEventArgs e)
         {
             Continent continent = (Continent)sender;
-            int id = ((Continent)sender).Id;
+            int id = continent.Id;
 
             if (e.IsChecked == true)
             {

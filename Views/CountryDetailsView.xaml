@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="Bookshelf.Views.EditCountryView"
+    x:Class="Bookshelf.Views.CountryDetailsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,11 +9,13 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
     <UserControl.Resources>
         <Style TargetType="Border">
             <Setter Property="Margin" Value="10" />
         </Style>
     </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -64,8 +66,9 @@
             <Border>
                 <Button
                     Padding="15,5"
-                    Command="{Binding UpdateEntityCommand}"
-                    Content="Update" />
+                    d:Content="Add / Update"
+                    Command="{Binding AcceptCommand}"
+                    Content="{Binding Mode}" />
             </Border>
         </Grid>
     </Grid>

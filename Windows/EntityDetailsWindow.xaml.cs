@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Bookshelf.Views
+namespace Bookshelf.Windows
 {
     /// <summary>
-    /// Logika interakcji dla klasy AddContinentView.xaml
+    /// Logika interakcji dla klasy EntityDetailsWindow.xaml
     /// </summary>
-    public partial class AddContinentView : UserControl
+    public partial class EntityDetailsWindow : Window
     {
-        public AddContinentView()
+        public EntityDetailsWindow()
         {
             InitializeComponent();
         }

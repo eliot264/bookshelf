@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Bookshelf.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy EditCountryView.xaml
+    /// Logika interakcji dla klasy CountryDetailsView.xaml
     /// </summary>
-    public partial class EditCountryView : UserControl
+    public partial class CountryDetailsView : UserControl
     {
-        public EditCountryView()
+        public CountryDetailsView()
         {
             InitializeComponent();
         }

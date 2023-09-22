@@ -1,4 +1,5 @@
-﻿using Bookshelf.Models;
+﻿using Bookshelf.Exceptions;
+using Bookshelf.Models;
 using Bookshelf.Services;
 using Bookshelf.ViewModels;
 using System;
@@ -11,12 +12,16 @@ namespace Bookshelf.Commands
 {
     public class AddEntityCommand<T> : CommandBase where T : DomainObject, new()
     {
-        private readonly AddEntityViewModel<T> _addEntityViewModel;
+        private readonly EntityDetailsViewModel<T> _addEntityViewModel;
         private readonly IDataService<T> _dataService;
         private readonly T _entity;
 
-        public AddEntityCommand(AddEntityViewModel<T> addEntityViewModel, T entity, IDataService<T> dataService)
+        public AddEntityCommand(EntityDetailsViewModel<T> addEntityViewModel, T entity, IDataService<T> dataService)
         {
+            if(addEntityViewModel.Mode != EntityDetailsMode.Add)
+            {
+                throw new InvalidEntityDetailsModeException(addEntityViewModel.Mode, EntityDetailsMode.Add, this.GetType());
+            }
             _addEntityViewModel = addEntityViewModel;
             _dataService = dataService;
             _entity = entity;
@@ -29,6 +34,10 @@ namespace Bookshelf.Commands
                 if(task.Exception == null)
                 {
                     _addEntityViewModel.PassAddedEntityToParent(task.Result);
+                }
+                else
+                {
+                    throw task.Exception;
                 }
             });
         }

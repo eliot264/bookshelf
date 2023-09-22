@@ -1,4 +1,5 @@
-﻿using Bookshelf.Models;
+﻿using Bookshelf.Exceptions;
+using Bookshelf.Models;
 using Bookshelf.Services;
 using Bookshelf.ViewModels;
 using System;
@@ -11,12 +12,16 @@ namespace Bookshelf.Commands
 {
     public class UpdateEntityCommand<T> : CommandBase where T : DomainObject, new()
     {
-        private readonly EditEntityViewModel<T> _editEntityViewModel;
+        private readonly EntityDetailsViewModel<T> _editEntityViewModel;
         private readonly IDataService<T> _dataService;
         private readonly T _entity;
 
-        public UpdateEntityCommand(EditEntityViewModel<T> editEntityViewModel, IDataService<T> dataService, T entity)
+        public UpdateEntityCommand(EntityDetailsViewModel<T> editEntityViewModel, IDataService<T> dataService, T entity)
         {
+            if(editEntityViewModel.Mode != EntityDetailsMode.Update)
+            {
+                throw new InvalidEntityDetailsModeException(editEntityViewModel.Mode, EntityDetailsMode.Update, this.GetType());
+            }
             _editEntityViewModel = editEntityViewModel;
             _dataService = dataService;
             _entity = entity;

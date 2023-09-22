@@ -34,7 +34,8 @@ namespace Bookshelf.ViewModels.CountryViewModels
                 OnPropertyChanged(nameof(Continents));
             }
         }
-        public CountryListingElementViewModel(EntityListingViewModel<Country> entityListingViewModel, IWindowService<EditObjectWindow> windowService, IEditEntityViewModelFactory<Country> editEntityViewModelFactory, Country entity) : base(entityListingViewModel, windowService, editEntityViewModelFactory, entity)
+
+        public CountryListingElementViewModel(EntityListingViewModel<Country> entityListingViewModel, IWindowService<EntityDetailsWindow> windowService, Country entity, IEntityDetailsViewModelFactory<Country> entityDetailsViewModelFactory) : base(entityListingViewModel, windowService, entity, entityDetailsViewModelFactory)
         {
             _continents = new ObservableCollection<ContinentViewModel>();
             LoadContinents(entity.Continents);

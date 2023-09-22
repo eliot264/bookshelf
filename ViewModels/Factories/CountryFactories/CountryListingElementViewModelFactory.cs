@@ -12,18 +12,18 @@ namespace Bookshelf.ViewModels.Factories
 {
     public class CountryListingElementViewModelFactory : IEntityListingElementViewModelFactory<Country>
     {
-        private readonly IWindowService<EditObjectWindow> _windowService;
-        private readonly IEditEntityViewModelFactory<Country> _editEntityViewModelFactory;
+        private readonly IWindowService<EntityDetailsWindow> _windowService;
+        private readonly IEntityDetailsViewModelFactory<Country> _entityDetailsViewModelFactory;
 
-        public CountryListingElementViewModelFactory(IWindowService<EditObjectWindow> windowService, IEditEntityViewModelFactory<Country> editEntityViewModelFactory)
+        public CountryListingElementViewModelFactory(IWindowService<EntityDetailsWindow> windowService, IEntityDetailsViewModelFactory<Country> entityDetailsViewModelFactory)
         {
             _windowService = windowService;
-            _editEntityViewModelFactory = editEntityViewModelFactory;
+            _entityDetailsViewModelFactory = entityDetailsViewModelFactory;
         }
 
         public EntityListingElementViewModel<Country> CreateViewModel(EntityListingViewModel<Country> entityListingViewModel, Country entity)
         {
-            return new CountryListingElementViewModel(entityListingViewModel,_windowService, _editEntityViewModelFactory, entity);
+            return new CountryListingElementViewModel(entityListingViewModel, _windowService, entity, _entityDetailsViewModelFactory);
         }
     }
 }
