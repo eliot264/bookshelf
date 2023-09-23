@@ -27,6 +27,8 @@ namespace Bookshelf
         {
             IServiceProvider serviceProvider = CreateServiceProvider();
 
+            serviceProvider.GetRequiredService<IDataSeedService<Continent>>().Seed();
+
             Window window = serviceProvider.GetRequiredService<MainWindow>();
             //{
             //    DataContext = new MainViewModel(new CountryTableViewModel(_contextFactory))
@@ -34,6 +36,7 @@ namespace Bookshelf
             //    //DataContext = new MainViewModel(ContinentTableViewModel.LoadContinentTableViewModel(new GenericDataService<Continent>(new BookshelfDbContextFactory(CONNECTION_STRING))))
             //    //DataContext = new MainViewModel(BookTableViewModel.LoadBookTableViewModel(new GenericDataService<Book>(new BookshelfDbContextFactory(CONNECTION_STRING))))
             //};
+
             window.Show();
 
             base.OnStartup(e);
@@ -47,6 +50,8 @@ namespace Bookshelf
             services.AddSingleton<IDataService<Country>, CountryDataService>();
             services.AddSingleton<IDataService<Continent>, GenericDataService<Continent>>();
             services.AddSingleton<IWindowService<EntityDetailsWindow>, GenericWindowService<EntityDetailsWindow>>();
+
+            services.AddSingleton<IDataSeedService<Continent>, ContinentSeedService>();
 
             services.AddSingleton<IBookshelfViewModelFactory<CountryListingViewModel>, CountryListingViewModelFactory>();
 
