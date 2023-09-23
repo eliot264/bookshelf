@@ -59,5 +59,14 @@ namespace Bookshelf.ViewModels
             OnPropertyChanged(nameof(Entities));
             _windowService.CloseWindow();
         }
+
+        public void RemoveEntityFromList(EntityListingElementViewModel<T> entityListingElementViewModel)
+        {
+            App.Current?.Dispatcher.Invoke(() =>
+            {
+                Entities.Remove(entityListingElementViewModel);
+            });
+            OnPropertyChanged(nameof(Entities));
+        }
     }
 }

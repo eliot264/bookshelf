@@ -17,6 +17,7 @@ namespace Bookshelf.ViewModels
     public class EntityListingElementViewModel<T> : ViewModelBase where T : DomainObject, new()
     {
         private readonly EntityListingViewModel<T> _entityListingViewModel;
+        private readonly IDataService<T> _dataService;
         private readonly IWindowService<EntityDetailsWindow> _windowService;
         private readonly IEntityDetailsViewModelFactory<T> _entityDetailsViewModelFactory;
         protected T _entity;
@@ -33,18 +34,21 @@ namespace Bookshelf.ViewModels
         }
 
         public ICommand OpenEditEntityWindowCommand { get; set; }
+        public ICommand DeleteEntityCommand { get; set; }
 
         protected event EntityChangedEventHandler? EntityChanged;
 
-        public EntityListingElementViewModel(EntityListingViewModel<T> entityListingViewModel, IWindowService<EntityDetailsWindow> windowService, T entity, IEntityDetailsViewModelFactory<T> entityDetailsViewModelFactory)
+        public EntityListingElementViewModel(EntityListingViewModel<T> entityListingViewModel, IDataService<T> dataService, IWindowService<EntityDetailsWindow> windowService, T entity, IEntityDetailsViewModelFactory<T> entityDetailsViewModelFactory)
         {
             _entityListingViewModel = entityListingViewModel;
+            _dataService = dataService;
             _windowService = windowService;
             _entityDetailsViewModelFactory = entityDetailsViewModelFactory;
             _entity = entity;
             _isChecked = false;
 
             OpenEditEntityWindowCommand = new OpenEntityDetailsWindowCommand<T>(_entity, this, _windowService, _entityDetailsViewModelFactory);
+            DeleteEntityCommand = new DeleteEntityCommand<T>(_dataService, _entity, this);
         }
 
         public void UpdateEntity(T entity)
@@ -53,6 +57,11 @@ namespace Bookshelf.ViewModels
             OnEntityChanged();
             _windowService.CloseWindow();
             //OnPropertyChanged(string.Empty); // refresh all properties
+        }
+
+        public void RemoveFromParent()
+        {
+            _entityListingViewModel.RemoveEntityFromList(this);
         }
 
         private void OnEntityChanged()

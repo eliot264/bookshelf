@@ -57,7 +57,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Button Command="{Binding OpenEditEntityWindowCommand}" Content="Edit" />
-                                    <Button Content="Delete" />
+                                    <Button Command="{Binding DeleteEntityCommand}" Content="Delete" />
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
