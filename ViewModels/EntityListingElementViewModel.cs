@@ -30,9 +30,20 @@ namespace Bookshelf.ViewModels
             {
                 _isChecked = value;
                 OnPropertyChanged(nameof(IsChecked));
+
+                if(value == true)
+                {
+                    _entityListingViewModel.AddToChecked(_entity);
+                    _entityListingViewModel.CheckedEntitiesNumber++;
+                }
+                else
+                {
+                    _entityListingViewModel.RemoveToChecked(_entity);
+                    _entityListingViewModel.CheckedEntitiesNumber--;
+                }
             }
         }
-
+        public int Id => _entity.Id;
         public ICommand OpenEditEntityWindowCommand { get; set; }
         public ICommand DeleteEntityCommand { get; set; }
 

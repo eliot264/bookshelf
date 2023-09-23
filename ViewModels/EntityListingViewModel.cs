@@ -20,11 +20,24 @@ namespace Bookshelf.ViewModels
         private readonly IWindowService<EntityDetailsWindow> _windowService;
         public readonly IEntityListingElementViewModelFactory<T> _entityListingElementViewModelFactory;
         public readonly IEntityDetailsViewModelFactory<T> _entityDetailsViewModelFactory;
+
         private readonly ObservableCollection<EntityListingElementViewModel<T>> _entities;
+        private readonly ObservableCollection<T> _checkedEntities;
+        private int _checkedEntitiesCount;
 
         public ObservableCollection<EntityListingElementViewModel<T>> Entities => _entities;
+        public int CheckedEntitiesNumber
+        {
+            get { return _checkedEntitiesCount; }
+            set
+            {
+                _checkedEntitiesCount = value;
+                OnPropertyChanged(nameof(CheckedEntitiesNumber));
+            }
+        }
 
         public ICommand OpenAddEntityWindowCommand { get; set; }
+        public ICommand DeleteEntitiesCommand { get; set; }
 
         protected EntityListingViewModel(IDataService<T> dataService, IWindowService<EntityDetailsWindow> windowService, IEntityListingElementViewModelFactory<T> entityListingElementViewModelFactory, IEntityDetailsViewModelFactory<T> entityDetailsViewModelFactory)
         {
@@ -33,17 +46,20 @@ namespace Bookshelf.ViewModels
             _dataService = dataService;
             _windowService = windowService;
             _entities = new ObservableCollection<EntityListingElementViewModel<T>>();
+            _checkedEntities = new ObservableCollection<T>();
+            _checkedEntitiesCount = 0;
 
             OpenAddEntityWindowCommand = new OpenEntityDetailsWindowCommand<T>(this, _windowService, _entityDetailsViewModelFactory);
+            DeleteEntitiesCommand = new DeleteEntityCommand<T>(_dataService, _checkedEntities, this);
         }
-        
+
         protected void LoadEntities()
         {
             _dataService.GetAll().ContinueWith(task =>
             {
-                if(task.Exception == null)
+                if (task.Exception == null)
                 {
-                    foreach(var entity in task.Result)
+                    foreach (var entity in task.Result)
                     {
                         Entities.Add(_entityListingElementViewModelFactory.CreateViewModel(this, entity));
                     }
@@ -67,6 +83,27 @@ namespace Bookshelf.ViewModels
                 Entities.Remove(entityListingElementViewModel);
             });
             OnPropertyChanged(nameof(Entities));
+        }
+        public void AddToChecked(T entity)
+        {
+            _checkedEntities.Add(entity);
+        }
+        public void RemoveToChecked(T entity)
+        {
+            _checkedEntities.Remove(entity);
+        }
+        public void RemoveSelectedEntitiesFromList()
+        {
+            App.Current?.Dispatcher.Invoke(() =>
+            {
+                foreach (var entity in _checkedEntities)
+                {
+                    Entities.Remove(Entities.First(e => e.Id == entity.Id));
+                }
+                _checkedEntities.Clear();
+                CheckedEntitiesNumber = 0;
+                OnPropertyChanged(nameof(Entities));
+            });
         }
     }
 }
