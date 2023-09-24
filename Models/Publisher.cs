@@ -11,7 +11,7 @@ namespace Bookshelf.Models
         public string Name { get; set; }
         public DateOnly? FoundationDate { get; set; }
         public int CountryId { get; set; }
-        public Country Country { get; }
+        public Country Country { get; set; }
         public ICollection<Book> Books { get; }
     }
 }

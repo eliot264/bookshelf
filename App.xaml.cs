@@ -5,6 +5,8 @@ using Bookshelf.ViewModels;
 using Bookshelf.ViewModels.CountryViewModels;
 using Bookshelf.ViewModels.Factories;
 using Bookshelf.ViewModels.Factories.CountryFactories;
+using Bookshelf.ViewModels.Factories.PublisherFactories;
+using Bookshelf.ViewModels.PublisherViewModels;
 using Bookshelf.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,18 +51,22 @@ namespace Bookshelf
             services.AddSingleton<BookshelfDbContextFactory>();
             services.AddSingleton<IDataService<Country>, CountryDataService>();
             services.AddSingleton<IDataService<Continent>, GenericDataService<Continent>>();
+            services.AddSingleton<IDataService<Publisher>, PublisherDataService>();
+
             services.AddSingleton<IWindowService<EntityDetailsWindow>, GenericWindowService<EntityDetailsWindow>>();
 
             services.AddSingleton<IDataSeedService<Continent>, ContinentSeedService>();
 
             services.AddSingleton<IBookshelfViewModelFactory<CountryListingViewModel>, CountryListingViewModelFactory>();
+            services.AddSingleton<IBookshelfViewModelFactory<PublisherListingViewModel>, PublisherListingViewModelFactory>();
 
             services.AddSingleton<IEntityListingElementViewModelFactory<Country>, CountryListingElementViewModelFactory>();
+            services.AddSingleton<IEntityListingElementViewModelFactory<Publisher>, PublisherListingElementViewModelFactory>();
 
             services.AddSingleton<IEntityDetailsViewModelFactory<Country>, CountryDetailsViewModelFactory>();
+            services.AddSingleton<IEntityDetailsViewModelFactory<Publisher>, PublisherDetailsViewModelFactory>();
 
-
-            services.AddScoped<MainViewModel>(s => new MainViewModel(s.GetRequiredService<IBookshelfViewModelFactory<CountryListingViewModel>>().CreateViewModel()));
+            services.AddScoped<MainViewModel>(s => new MainViewModel(s.GetRequiredService<IBookshelfViewModelFactory<PublisherListingViewModel>>().CreateViewModel()));
 
             services.AddScoped<MainWindow>(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
 

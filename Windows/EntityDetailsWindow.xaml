@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Bookshelf.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:publisherViewModels="clr-namespace:Bookshelf.ViewModels.PublisherViewModels"
     xmlns:views="clr-namespace:Bookshelf.Views"
     Title="EntityDetailsWindow"
     Width="800"
@@ -17,6 +18,9 @@
         <Grid.Resources>
             <DataTemplate DataType="{x:Type countryViewModels:CountryDetailsViewModel}">
                 <views:CountryDetailsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type publisherViewModels:PublisherDetailsViewModel}">
+                <views:PublisherDetailsView />
             </DataTemplate>
         </Grid.Resources>
 
