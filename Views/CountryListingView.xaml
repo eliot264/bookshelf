@@ -2,6 +2,7 @@
     x:Class="Bookshelf.Views.CountryListingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Bookshelf.Controls"
     xmlns:converters="clr-namespace:Bookshelf.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Bookshelf.Views"
@@ -20,18 +21,11 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Button
-                    Margin="5"
-                    Padding="15,5"
-                    Command="{Binding OpenAddEntityWindowCommand}"
-                    Content="Add country" />
-                <Button
-                    Margin="5"
-                    Padding="15,5"
-                    Command="{Binding DeleteEntitiesCommand}"
-                    Content="Delete selected countries" />
-            </StackPanel>
+            <controls:ListingModificationBar
+                AddEntityButtonCommand="{Binding OpenAddEntityWindowCommand}"
+                AddEntityButtonContent="Add country"
+                DeleteEntitiesButtonCommand="{Binding DeleteEntitiesCommand}"
+                DeleteEntitiesButtonContent="Delete selected countries" />
         </Grid>
 
         <Grid Grid.Row="1">

@@ -1,0 +1,29 @@
+﻿<UserControl
+    x:Class="Bookshelf.Controls.ListingModificationBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Bookshelf.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="White"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="15,5" />
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Horizontal">
+        <Button
+            d:Content="Add entity"
+            Command="{Binding AddEntityButtonCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Content="{Binding AddEntityButtonContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <Button
+            d:Content="Delete entities"
+            Command="{Binding DeleteEntitiesButtonCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Content="{Binding DeleteEntitiesButtonContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    </StackPanel>
+</UserControl>
